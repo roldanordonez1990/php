@@ -98,7 +98,7 @@
 
             $result = $conex->stmt_init();
 
-            foreach ($_POST['posicion'] as $values) {
+            foreach ($_POST['posicion'] as $values) {   
                 $posi += $values;
             }
 
