@@ -38,7 +38,7 @@
                 </select>
 
                 <?php
-                echo "</br>";
+                echo "</br>";       
                 echo "</br>";
                 ?>
                 Dorsal: <select name="dorsal">
@@ -76,7 +76,7 @@
             ?>  
 
             <form action="" method="post">
-                Busca un dni del jugador: <input type="text" name="dni">
+                Busca un dni del jugadorrrrr: <input type="text" name="dni">
                 <br>
                 <br>
                 <input type="submit" name="buscar" value="Buscar">
