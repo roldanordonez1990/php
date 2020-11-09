@@ -9,7 +9,8 @@
 
         <h2>Datos mostrados de los jugadores</h2>
         <?php
-        $conex = new mysqli('localhost', 'dwes', 'abc123.', 'futbol');
+        require_once './Funciones.php';
+       $conex =  consulta();
 
         if (!$conex->connect_errno) {
 

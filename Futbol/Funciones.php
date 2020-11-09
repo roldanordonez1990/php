@@ -56,7 +56,9 @@ function formulario(){
 
 <?php
 
-function consulta($conex){
+function consulta(){
    $conex = new mysqli('localhost', 'dwes', 'abc123.', 'futbol');
+   
+   return $conex;
 }
 ?>

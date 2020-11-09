@@ -13,7 +13,8 @@
         if (isset($_POST['consultar'])) {
 
             $posicion = $_POST['dato'];
-            $conex = new mysqli('localhost', 'dwes', 'abc123.', 'futbol');
+              require_once './Funciones.php';
+              $conex =  consulta();
 
             if (!$conex->connect_errno) {
                 $result = $conex->query("SELECT * FROM jugadores where $posicion LIKE '%$_POST[buscar]%'");

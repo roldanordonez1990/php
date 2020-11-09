@@ -9,7 +9,8 @@
         if (isset($_POST['enviar']) && preg_match('/^[A-Z]{1,50}/i', $_POST['nombre']) && preg_match('/^[\d]{8}[A-Z]{1}$/', $_POST['dni']) && preg_match('/^[A-Z]{1,50}/i', $_POST['equipo']) && preg_match('/^\d/', $_POST['goles'])) {
 
             $posi = 0;
-            $conex = new mysqli('localhost', 'dwes', 'abc123.', 'futbol');
+           require_once './Funciones.php';
+           $conex =  consulta();
 
             foreach ($_POST['posicion'] as $values) {
                 $posi += $values;

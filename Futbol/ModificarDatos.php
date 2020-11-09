@@ -12,7 +12,8 @@
         <?php
         if (isset($_POST['buscar']) && preg_match('/^[\d]{8}[A-Z]{1}$/', $_POST['dni'])) {
 
-            $conex = new mysqli('localhost', 'dwes', 'abc123.', 'futbol');
+             require_once './Funciones.php';
+             $conex =  consulta();
 
             if (!$conex->connect_errno) {
                 $result = $conex->query("SELECT * from jugadores where dni = '$_POST[dni]'");
@@ -91,9 +92,10 @@
         ?>
 
         <?php
-        if (isset($_POST['guardar']) && preg_match('/^[A-Z]{1,50}/i', $_POST['nombre']) && preg_match('/^[A-Z]{1,50}/i', $_POST['equipo']) && preg_match('/^\d/', $_POST['goles'])) {
+        if (isset($_POST['guardar']) && preg_match('/^[A-Z]{1,50}/i', $_POST['nombre']) && preg_match('/^[A-Z]{1,50}$/i', $_POST['equipo']) && preg_match('/^\d/', $_POST['goles'])) {
 
-            $conex = new mysqli('localhost', 'dwes', 'abc123.', 'futbol');
+              require_once './Funciones.php';
+              $conex =  consulta();
             $posi = 0;
 
             $result = $conex->stmt_init();
