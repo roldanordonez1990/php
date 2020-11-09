@@ -10,7 +10,7 @@
         <h2>Datos mostrados de los jugadores</h2>
         <?php
         require_once './Funciones.php';
-       $conex =  consulta();
+        $conex =  consulta();
 
         if (!$conex->connect_errno) {
 
