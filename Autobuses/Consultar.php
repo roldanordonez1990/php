@@ -28,24 +28,30 @@ and open the template in the editor.
                     ?> 
                     <form action="" method="post"> 
                         <?php
-                        echo "Fecha:" . " <input type='date' name='fecha' value='$obj->Fecha'>";
-                        echo "<input type='hidden' name='fecha' value='$_POST[fecha]'>";
+                        echo "Fecha:" . " <input type='date' name='fecha' value='$obj->Fecha' readonly>";
+
                         echo "<br>";
                         echo "<br>";
-                        echo "Origen:" . "<input type ='text' name ='origen' value ='$obj->Origen'>";
-                        echo "<input type='hidden' name='origen' value='$_POST[origen]'>";
+                        echo "Origen:" . "<input type ='text' name ='origen' value ='$obj->Origen' readonly>";
+
                         echo "<br>";
                         echo "<br>";
-                        echo "Destino:" . "<input type ='text' name ='destino' value ='$obj->Destino' >";
-                        echo "<input type='hidden' name='destino' value='$_POST[destino]'>";
+                        echo "Destino:" . "<input type ='text' name ='destino' value ='$obj->Destino' readonly >";
+
                         echo "<br>";
                         echo "<br>";
-                        echo "Plazas disponibles:" . "<input type ='text' name ='plazas' value ='$obj->Plazas_libres' >";
-                         
+                        echo "Plazas disponibles:" . "<input type ='text' name ='plazas' value ='$obj->Plazas_libres' readonly >";
+                        echo "<br>";
+                        echo "<br>";
+                        echo "Reservar más de una plaza" . "<input type='int' name='billetes'>";
+                        echo "<input type = 'submit' name = 'reservar' value = 'Reservar'>";
                         ?>
-                        <input type = "submit" name = "reservar" value = "Reservar">
+
 
                     </form>
+                    <br>
+                    <br>
+                    <a href="">Volver</a>
                     <?php
                 }
             }
@@ -56,33 +62,49 @@ and open the template in the editor.
                 Fecha: <input type="date" name="fecha" value="">
                 <br>
                 <br>
-                Origen: <input type="text" name="origen" value="">
+                Origen: <select name="origen">
+
+                    <option value="Madrid">Madrid</option>
+                    <option value="Malaga">Malaga</option>
+                    <option value="Sevilla">Sevilla</option>
+                    <option value="Barcelona">Barcelona</option>
+
+                </select>
                 <br>
                 <br>
-                Destino: <input type="text" name="destino" value="">
+                Destino:  <select name="destino">
+
+                    <option value="Madrid">Madrid</option>
+                    <option value="Malaga">Malaga</option>
+                    <option value="Sevilla">Sevilla</option>
+                    <option value="Barcelona">Barcelona</option>
+                    <option value="Huelva">Huelva</option>
+
+                </select>
                 <br>
                 <br>
                 <input type="submit" name="consultar" value="Consultar">
 
             </form>
-    <?php
-}
-?> 
-        
+            <?php
+        }
+        ?> 
+
         <?php
+        if (isset($_POST['reservar']) && $_POST['plazas'] > 0) {
+            $conex = new mysqli('localhost', 'dwes', 'abc123.', 'autobuses');
+            $result = $conex->query("SELECT Fecha, Origen, Destino, Plazas_libres from viajes where Fecha = '$_POST[fecha]' and Origen= '$_POST[origen]' and Destino= '$_POST[destino]'");
+
+            $obj = $result->fetch_object();
+            $plaza = $obj->Plazas_libres - $_POST['billetes'];
+
+            $result = $conex->query("UPDATE viajes SET Plazas_libres = $plaza where Fecha= '$_POST[fecha]' and Origen = '$_POST[origen]' and Destino= '$_POST[destino]'");
+            echo "Plaza reservada";
         
-        if(isset($_POST['reservar'])){
-             $conex = new mysqli('localhost', 'dwes', 'abc123.', 'autobuses');
-             
-             $result = $conex->query("SELECT Plazas_libres from viajes where Fecha = '$_POST[fecha]' and Origen= '$_POST[origen]' and Destino= '$_POST[destino]'");
-             $obj = $result->fetch_object();
-             $plaza = $obj->Plazas_libres -1;
-             
-             
-             $result = $conex->query("UPDATE viajes SET Plazas_libres = '$plaza' where Fecha= '$_POST[fecha]' and Origen = '$_POST[origen]' and Destino= '$_POST[destino]'");
-             echo "Plaza reservada";
         }
         ?>
+
+
 
     </body>
 </html>
