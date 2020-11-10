@@ -15,7 +15,7 @@ and open the template in the editor.
         <?php
         $conex = new mysqli('localhost', 'dwes', 'abc123.', 'autobuses');
         if (isset($_POST['consultar'])) {
-            
+
 
             if ($conex->connect_errno) {
                 echo "Error en la conexión";
@@ -24,8 +24,16 @@ and open the template in the editor.
 
                 if ($conex->errno) {
                     echo "Error en la consulta";
-                    
+                }
+
+                if (!$result->num_rows) {
+                    echo "Este viaje no existe";
+                    ?>
+                    <br>
+                    <a href="">Volver</a>
+                    <?php
                 } else {
+
                     $obj = $result->fetch_object();
                     ?> 
                     <form action="" method="post"> 
@@ -45,8 +53,14 @@ and open the template in the editor.
                         echo "Plazas disponibles:" . "<input type ='text' name ='plazas' value ='$obj->Plazas_libres' readonly >";
                         echo "<br>";
                         echo "<br>";
-                        echo "Reservar más de una plaza" . "<input type='int' name='billetes'>";
-                        echo "<input type = 'submit' name = 'reservar' value = 'Reservar'>";
+
+
+                        if ($obj->Plazas_libres == 0) {
+                            echo "No hay plazas disponibles para este viaje";
+                        } else {
+                            echo "Reservar más de una plaza" . "<input type='int' name='billetes'>";
+                            echo "<input type = 'submit' name = 'reservar' value = 'Reservar'>";
+                        }
                         ?>
 
 
@@ -57,6 +71,7 @@ and open the template in the editor.
                     <?php
                 }
             }
+        
         } else {
             ?>
             <form action="" method="post"> 
@@ -69,14 +84,14 @@ and open the template in the editor.
                     <option value="Madrid">Madrid</option>
                     <option value="Malaga">Malaga</option>
                     <option value="Cordoba">Córdoba</option>
-                    
+
 
                 </select>
                 <br>
                 <br>
                 Destino:  <select name="destino">
 
-                   
+
                     <option value="Malaga">Malaga</option>
                     <option value="Sevilla">Sevilla</option>
                     <option value="Barcelona">Barcelona</option>
@@ -90,8 +105,8 @@ and open the template in the editor.
             </form>
             <?php
         }
-        ?> 
-        <?php
+
+
         if (isset($_POST['reservar'])) {
 
             $maximoPlazas = $_POST['plazas'];
