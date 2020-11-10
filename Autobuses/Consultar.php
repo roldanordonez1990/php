@@ -13,8 +13,9 @@ and open the template in the editor.
         <h3>Autobuses</h3>
 
         <?php
+        $conex = new mysqli('localhost', 'dwes', 'abc123.', 'autobuses');
         if (isset($_POST['consultar'])) {
-            $conex = new mysqli('localhost', 'dwes', 'abc123.', 'autobuses');
+            
 
             if ($conex->connect_errno) {
                 echo "Error en la conexión";
@@ -23,6 +24,7 @@ and open the template in the editor.
 
                 if ($conex->errno) {
                     echo "Error en la consulta";
+                    
                 } else {
                     $obj = $result->fetch_object();
                     ?> 
@@ -66,15 +68,15 @@ and open the template in the editor.
 
                     <option value="Madrid">Madrid</option>
                     <option value="Malaga">Malaga</option>
-                    <option value="Sevilla">Sevilla</option>
-                    <option value="Barcelona">Barcelona</option>
+                    <option value="Cordoba">Córdoba</option>
+                    
 
                 </select>
                 <br>
                 <br>
                 Destino:  <select name="destino">
 
-                    <option value="Madrid">Madrid</option>
+                   
                     <option value="Malaga">Malaga</option>
                     <option value="Sevilla">Sevilla</option>
                     <option value="Barcelona">Barcelona</option>
@@ -89,18 +91,22 @@ and open the template in the editor.
             <?php
         }
         ?> 
-
         <?php
-        if (isset($_POST['reservar']) && $_POST['plazas'] > 0) {
-            $conex = new mysqli('localhost', 'dwes', 'abc123.', 'autobuses');
-            $result = $conex->query("SELECT Fecha, Origen, Destino, Plazas_libres from viajes where Fecha = '$_POST[fecha]' and Origen= '$_POST[origen]' and Destino= '$_POST[destino]'");
+        if (isset($_POST['reservar'])) {
 
-            $obj = $result->fetch_object();
-            $plaza = $obj->Plazas_libres - $_POST['billetes'];
+            $maximoPlazas = $_POST['plazas'];
 
-            $result = $conex->query("UPDATE viajes SET Plazas_libres = $plaza where Fecha= '$_POST[fecha]' and Origen = '$_POST[origen]' and Destino= '$_POST[destino]'");
-            echo "Plaza reservada";
-        
+            if ($_POST['plazas'] > 0 && $_POST['billetes'] <= $maximoPlazas) {
+
+                $plaza = $_POST['plazas'] - $_POST['billetes'];
+
+                $result = $conex->query("UPDATE viajes SET Plazas_libres = $plaza where Fecha= '$_POST[fecha]' and Origen = '$_POST[origen]' and Destino= '$_POST[destino]'");
+
+                echo "Plaza reservada";
+            } else {
+
+                echo "No hay plazas disponibles";
+            }
         }
         ?>
 
