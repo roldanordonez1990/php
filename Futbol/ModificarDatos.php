@@ -12,14 +12,27 @@
         <?php
         if (isset($_POST['buscar']) && preg_match('/^[\d]{8}[A-Z]{1}$/', $_POST['dni'])) {
 
-             require_once './Funciones.php';
-             $conex =  consulta();
+            require_once './Funciones.php';
+            $conex = consulta();
 
             if (!$conex->connect_errno) {
                 $result = $conex->query("SELECT * from jugadores where dni = '$_POST[dni]'");
             }
 
+
+
+
             $fila = $result->fetch_object();
+
+            if ($fila->dni != $_POST['dni']) {
+                echo "Este dni no existe";
+                ?>
+                <a href="">Volver</a>
+                <?php
+                exit();
+            }
+
+
             $array = explode(",", $fila->posicion);
             ?>
             <form action="" method="post">
@@ -39,7 +52,7 @@
                 </select>
 
                 <?php
-                echo "</br>";       
+                echo "</br>";
                 echo "</br>";
                 ?>
                 Dorsal: <select name="dorsal">
@@ -94,13 +107,13 @@
         <?php
         if (isset($_POST['guardar']) && preg_match('/^[A-Z]{1,50}/i', $_POST['nombre']) && preg_match('/^[A-Z]{1,50}$/i', $_POST['equipo']) && preg_match('/^\d/', $_POST['goles'])) {
 
-              require_once './Funciones.php';
-              $conex =  consulta();
+            require_once './Funciones.php';
+            $conex = consulta();
             $posi = 0;
 
             $result = $conex->stmt_init();
 
-            foreach ($_POST['posicion'] as $values) {   
+            foreach ($_POST['posicion'] as $values) {
                 $posi += $values;
             }
 
@@ -109,22 +122,18 @@
             $result->execute();
             $result->close();
             echo "Jugador modificado correctamente<br>";
-            
-        }else if (isset($_POST['guardar']) && !preg_match('/^[A-Z]/i', $_POST['nombre'])) {
-                echo "Nombre NO válido";
-            }
-            
-            if (isset($_POST['guardar']) && !preg_match('/^[A-Z]/i', $_POST['equipo'])) {
-                echo "Equipo NO válido";
-            }
-            if (isset($_POST['guardar']) && !preg_match('/^\d/', $_POST['goles'])) {
-                echo "Goles NO válido";
-            }
-        
-            
-        
+        } else if (isset($_POST['guardar']) && !preg_match('/^[A-Z]/i', $_POST['nombre'])) {
+            echo "Nombre NO válido";
+        }
+
+        if (isset($_POST['guardar']) && !preg_match('/^[A-Z]/i', $_POST['equipo'])) {
+            echo "Equipo NO válido";
+        }
+        if (isset($_POST['guardar']) && !preg_match('/^\d/', $_POST['goles'])) {
+            echo "Goles NO válido";
+        }
         ?>
-            
+
     </body>
 </html>
 
