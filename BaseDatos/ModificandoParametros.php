@@ -76,7 +76,7 @@
             }
 
             if (isset($_POST['actualizar'])) {
-                echo 'holaaaaaaaaaaaa';
+                echo 'holitaa';
                 $result2 = $conexion->stmt_init();
                 $result2->prepare('UPDATE stock SET unidades=? WHERE tienda=? and producto=?');
                 $result2->bind_param('sss', $unidades, $tienda, $_POST['producto']);
