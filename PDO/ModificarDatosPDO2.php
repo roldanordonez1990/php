@@ -3,7 +3,6 @@ try{
  $opciones = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_SERVER_VERSION);
  $conex = new PDO('mysql:host=localhost; dbname=dwes; charset=UTF8mb4', 'dwes', 'abc123.', $opciones);
  
- 
  //$consulta = $conex->exec($statement); 
   //echo $consulta;
    // echo $dwes->errorCode();
@@ -16,7 +15,7 @@ try{
 
 $ok = true;
  $conex->beginTransaction();
- if($conex->exec("UPDATE stock SET unidades=1 WHERE tienda=1 and producto='PAPYRE62GB'") === 0){
+ if($conex->exec("UPDATE stock SET unidades=1 WHERE tienda=1 and producto='PAPYRE62GB'") === 0){ //se ponen 3 para que no de error y todos los tipos sean iguales
      $ok = false;
      echo 'transaccion 1';
  }else{
@@ -26,7 +25,7 @@ $ok = true;
      $ok = false;
        echo 'transaccion 99';
  } else {
-       echo 'transaccion ese 2';
+       echo 'transaccion else 2';
 }
  
  if ($ok){

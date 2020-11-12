@@ -20,72 +20,71 @@
             }
 
 
-
-
-            $fila = $result->fetch_object();
-
-            if ($fila->dni != $_POST['dni']) {
+            if (!$result->num_rows) {
                 echo "Este dni no existe";
                 ?>
                 <a href="">Volver</a>
                 <?php
-                exit();
-            }
+            } else {
+                $fila = $result->fetch_object();
 
 
-            $array = explode(",", $fila->posicion);
-            ?>
-            <form action="" method="post">
-                <?php
-                echo "Dni encontrado: " . "<input type='text' name='dni' value= '$_POST[dni]' readonly >";
-                echo "</br>";
-                echo "</br>";
-                echo "Nombre: " . "<input type='text' name='nombre' value='$fila->nombre'>";
-                echo "</br>";
-                echo "</br>";
+
+
+                $array = explode(",", $fila->posicion);
                 ?>
-                Posición: <select multiple="" name="posicion[]">
-                    <option value="1" <?php if (in_array("portero", $array)) echo "selected"; ?>>Portero</option>
-                    <option value="2" <?php if (in_array("defensa", $array)) echo "selected"; ?>>Defensa</option>
-                    <option value="4" <?php if (in_array("centrocampista", $array)) echo "selected"; ?>>Centrocampista</option>
-                    <option value="8" <?php if (in_array("delantero", $array)) echo "selected"; ?>>Delantero</option>
-                </select>
-
-                <?php
-                echo "</br>";
-                echo "</br>";
-                ?>
-                Dorsal: <select name="dorsal">
+                <form action="" method="post">
+                    <?php
+                    echo "Dni encontrado: " . "<input type='text' name='dni' value= '$_POST[dni]' readonly >";
+                    echo "</br>";
+                    echo "</br>";
+                    echo "Nombre: " . "<input type='text' name='nombre' value='$fila->nombre'>";
+                    echo "</br>";
+                    echo "</br>";
+                    ?>
+                    Posición: <select multiple="" name="posicion[]">
+                        <option value="1" <?php if (in_array("portero", $array)) echo "selected"; ?>>Portero</option>
+                        <option value="2" <?php if (in_array("defensa", $array)) echo "selected"; ?>>Defensa</option>
+                        <option value="4" <?php if (in_array("centrocampista", $array)) echo "selected"; ?>>Centrocampista</option>
+                        <option value="8" <?php if (in_array("delantero", $array)) echo "selected"; ?>>Delantero</option>
+                    </select>
 
                     <?php
-                    for ($i = 1; $i <= 11; $i++) {
-
-                        echo " <option value='$i'";
-                        if ($fila->dorsal == $i) {
-                            echo 'selected';
-                        }
-
-                        echo ">" . $i . "</option>";
-                    }
+                    echo "</br>";
+                    echo "</br>";
                     ?>
-                </select>
-                <?php
-                echo "</br>";
-                echo "</br>";
-                echo "Equipo: " . "<input type='text' name='equipo' value='$fila->equipo'>";
-                echo "</br>";
-                echo "</br>";
-                echo "Goles: " . "<input type='text' name='goles' value='$fila->goles'>";
-                echo "</br>";
-                echo "</br>";
-                ?>
+                    Dorsal: <select name="dorsal">
 
-                <input type="submit" name="guardar" value="Guardar datos">
-            </form>
-            <br>
-            <br>
-            <a href="ModificarDatos.php">Volver</a>
-            <?php
+                        <?php
+                        for ($i = 1; $i <= 11; $i++) {
+
+                            echo " <option value='$i'";
+                            if ($fila->dorsal == $i) {
+                                echo 'selected';
+                            }
+
+                            echo ">" . $i . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
+                    echo "</br>";
+                    echo "</br>";
+                    echo "Equipo: " . "<input type='text' name='equipo' value='$fila->equipo'>";
+                    echo "</br>";
+                    echo "</br>";
+                    echo "Goles: " . "<input type='text' name='goles' value='$fila->goles'>";
+                    echo "</br>";
+                    echo "</br>";
+                    ?>
+
+                    <input type="submit" name="guardar" value="Guardar datos">
+                </form>
+                <br>
+                <br>
+                <a href="ModificarDatos.php">Volver</a>
+                <?php
+            }
         } else {
             ?>  
 
