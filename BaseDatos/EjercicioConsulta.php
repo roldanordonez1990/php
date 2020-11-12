@@ -48,7 +48,7 @@
 
         <div id="contenido">
             <?php
-            if (!empty($_POST['nombre_corto'])) {
+            if (isset($_POST['enviar'])) {
 
                 $producto = $_POST['nombre_corto'];
 
