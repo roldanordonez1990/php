@@ -56,7 +56,7 @@
 
 
                     while ($fila = $result->fetch()) {
-                        echo "Tienda: " . $fila['nombre'] . " : <input type='text' name='uni[]' value='$fila[unidades]'>"."<br>";
+                        echo "Tienda: " . $fila['nombre'] . " : <input type='text' name='uni[]' value='$fila[unidades]'>" . "<br>";
 
                         echo "<input type='hidden' name='producto' value='$_POST[nombre_corto]'>";
                         echo "<input type ='hidden' name ='codigoTienda[]' value ='$fila[cod]'>";
@@ -70,18 +70,22 @@
             ?>
             <?php
             if (isset($_POST['actualizar'])) {
-                $result = $conex->query('SELECT ti.nombre, ti.cod, sto.unidades from tienda as ti JOIN stock as sto where sto.tienda=ti.cod and sto.producto="' . $_POST['producto'] . '"');
-                $i = 0;
-                while ($a = $result->fetch(PDO::FETCH_ASSOC)) {
-                    $consulta = $conex->prepare('UPDATE stock SET unidades = ? WHERE producto = ? AND tienda ="' . $a["cod"] . '";');
-                    $unidad = $_POST["uni"][$i];
-                    $producto = $_POST["producto"];
-                    $consulta->bindParam(1, $unidad);
-                    $consulta->bindParam(2, $producto);
-                    $consulta->execute();
-                    $i++;
+
+                $producto = $_POST["producto"];
+
+                $result = $conex->prepare('UPDATE stock SET unidades=? WHERE tienda=? and producto=?');
+                for ($i = 0; $i < count($_POST['uni']); $i++) {
+                    $unidades = $_POST["uni"][$i];
+                    $tienda = $_POST["codigoTienda"][$i];
+                    $result->bindParam(1, $unidades);
+                    $result->bindParam(2, $tienda);
+                    $result->bindParam(3, $producto);
+
+                    $result->execute();
                 }
-                $consulta = null;
+
+
+                $result = null;
             }
             ?>
         </div>
