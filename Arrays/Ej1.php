@@ -9,7 +9,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title></title>
     </head>
-    <body>      //holaaaa
+    <body>      //feo
         <?php
         $numero = array();
         $min = 0;
