@@ -6,7 +6,7 @@
         <title>Ejercicio 3</title>
     </head>
     <body>
-//holaaaaaaaaaaaaaaa
+
         <?php
         if (isset($_POST['enviar'])) {
             ?>
