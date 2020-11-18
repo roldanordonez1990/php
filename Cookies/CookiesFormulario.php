@@ -55,11 +55,9 @@ if (isset($_POST['enviar']) && (!empty($_POST['nombre'])) && (!empty($_POST['pas
 
         Nombre: <input type="text" name="nombre" value="<?php if (isset($_POST['volver']) && isset($_COOKIE['chekeo'])) {
               
-            echo $_COOKIE['nombreUsuario'];
+        echo $_COOKIE['nombreUsuario'];
             
-    } else {
-        echo "";
-    }
+    } 
     ?>" >
 
 
@@ -67,11 +65,10 @@ if (isset($_POST['enviar']) && (!empty($_POST['nombre'])) && (!empty($_POST['pas
         <br>
         Password: <input type="password" name="pass" value="<?php if (isset($_POST['volver']) && isset($_COOKIE['chekeo'])) {
              
-            echo $_COOKIE['passUsuario'];
+        echo $_COOKIE['passUsuario'];
             
-        } else {
-            echo "";
-        }
+        } 
+           
         ?>" >
 
         <br>
