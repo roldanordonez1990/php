@@ -1,32 +1,17 @@
-<?php
+<html>
+    <head></head>
+    <body>
 
-if (isset($_POST['enviar']) && (isset($_POST['recordar']))) {
+        <?php
+       
+            echo "Hola " . $_COOKIE['nombreUsuario'] . " ,su última visita fue:" . $_COOKIE['ultimoAcceso'];
+      
+        ?>
+        <form action="CookiesFormulario.php" method="post">
 
-    $nombre = $_POST['nombre'];
-    $pass = $_POST['pass'];
-    $fecha = date('d-m-y h:i:s');
+            <input type="submit" name="volver" value="Volver">
 
-    setcookie('nombreUsuario', $nombre);
-    setcookie('passUsuario', $pass);
-    setcookie("ultimoAcceso", $fecha);
-}
+        </form>
+    </body>
+</html>
 
-
-
-if (isset($_COOKIE['nombreUsuario']) && isset($_COOKIE['passUsuario']) && isset($_COOKIE['ultimoAcceso'])) {
-
-    echo "Hola " . $_COOKIE['nombreUsuario'] . " ,su última visita fue:" . $_COOKIE['ultimoAcceso'];
-}else {
-    
-    echo "Primer acceso";
-}
-
-?>
-
-<form action="CookiesFormulario.php" method="post">
-    
-    <input type="submit" name="volver" value="Volver">
-    <input type="hidden" name="nombre" value="<?php echo $_COOKIE['nombreUsuario'] ?>">
-    <input type="hidden" name="pass" value="<?php echo $_COOKIE['passUsuario'] ?>">
-    
-</form>

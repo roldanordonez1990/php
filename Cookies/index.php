@@ -2,7 +2,7 @@
 
 $fecha = date('d-m-y h:i:s');
 
-setcookie('ultimoAcceso', $fecha, time()+60);
+setcookie('ultimoAcceso', $fecha);
 
 if(isset($_COOKIE['ultimoAcceso'])){
     ?>
