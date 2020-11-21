@@ -1,12 +1,14 @@
 
 <?php
 if (isset($_POST['enviar'])) {
+
     $tiempoCookie = 3600;
     $nombre = $_POST['nombre'];
     $pass = $_POST['pass'];
     $fecha = date('d-m-y h:i:s');
-    $check = $_POST['recordar'];
-
+    
+     session_name($_POST['nombre']);
+     session_start();
     setcookie('nombreUsuario', $nombre, time()+$tiempoCookie);
     setcookie('passUsuario', $pass,  time()+$tiempoCookie);
     setcookie("ultimoAcceso", $fecha,  time()+$tiempoCookie);
@@ -34,16 +36,35 @@ try {
 
 
 if (isset($_POST['enviar']) && (!empty($_POST['nombre'])) && (!empty($_POST['pass']))) {
+ 
+    $result = $conex->query("SELECT * from datos where nombre='$_POST[nombre]' and password='".md5($_POST["pass"])."'");
 
-    $result = $conex->query("SELECT * from datos");
-    $obj = $result->fetch();
+       if(isset($_SESSION['visitas'])){
+            echo "Hola " . session_name(); 
+            echo "<br>";
+        
+          $_SESSION['visitas']++; 
+          echo "Visita número: ".$_SESSION['visitas'];      
+          
+                    
+       }else{
+           echo "Bienvenido a nuestra página";
+          $_SESSION['visitas'] = 0; 
+       }
+       
+        //header('Location: Guarda_Sesion.php');
+        
+        ?>
+<html>
+    <head></head>
+    <body>
+        <form action="" method="post">
+            <input type="submit" name="volver" value="Volver">
+        </form>
+    </body>
+</html>
+<?php
 
-    if ($_POST['nombre'] == $obj['nombre'] && md5($_POST['pass']) === $obj['password']) {
-        header('Location: GuardaCookies.php');
-    } else {
-
-        header('Location: CookiesFormulario.php');
-    }
 } else {
     ?>
 
