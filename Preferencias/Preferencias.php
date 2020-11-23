@@ -1,7 +1,7 @@
 <?php
 session_start();
 //Creamos la sesión
-setcookie(session_name(), session_id(), time()+3600);
+//setcookie(session_name(), session_id(), time()+3600);
 
 if(isset($_POST['establecer'])){
 //Mientras la sesión permanece abierta, puedes utilizar la variable superglobal $_SESSION para añadir información a la sesión del usuario

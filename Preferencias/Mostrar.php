@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_POST['borrar'])){
-    setcookie(session_name(), "", time()-3600, "/Preferencias");
+    setcookie(session_name(), "", time()-3600, "/");
     session_unset();
     session_destroy();
     

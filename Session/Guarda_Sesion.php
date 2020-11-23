@@ -1,15 +1,18 @@
 <?php
+session_name();
 session_start();
+
 if (isset($_SESSION['visitas'])) {
-    echo "Hola " . session_name($_COOKIE['nombreUsuario']);
+    echo "Hola " .session_name(); 
     echo "<br>";
-    echo "Contador de visitas:";
-    foreach ($_SESSION["visitas"] as $visita) {
-        echo $visita . "<br>";
-    } 
+   
+    
+   echo "Visita número: " .$_SESSION["visitas"] ++." En la fecha: ".$_COOKIE['ultimoAcceso'];
+   
+    
 }else{
     echo "Bienvenido a nuestra página";
-    $_SESSION["visitas"][] = mktime();
+    $_SESSION["visitas"] = 1;
 }
 ?>
 <html>
