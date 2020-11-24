@@ -6,7 +6,7 @@ if (isset($_POST['enviar'])) {
     $nombre = $_POST['nombre'];
     $pass = $_POST['pass'];
     $fecha = date('d-m-y h:i:s');
-
+    
     session_name($_POST['nombre']);
     session_start();
     setcookie('nombreUsuario', $nombre, time() + $tiempoCookie);
