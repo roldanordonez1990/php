@@ -1,5 +1,5 @@
 <?php
-session_name();
+session_name($_COOKIE['nombreUsuario']);
 session_start();
 
 if (isset($_SESSION['visitas'])) {
@@ -7,12 +7,15 @@ if (isset($_SESSION['visitas'])) {
     echo "<br>";
    
     
-   echo "Visita número: " .$_SESSION["visitas"] ++." En la fecha: ".$_COOKIE['ultimoAcceso'];
-   
+   //echo "Visita número: " .$_SESSION["visitas"] ++." En la fecha: ".$_COOKIE['ultimoAcceso'];
+   foreach ($_SESSION["visitas"] as $values){
+       echo $values."<br>";
+   }
+   $_SESSION["visitas"][] = $_COOKIE['ultimoAcceso'];
     
 }else{
     echo "Bienvenido a nuestra página";
-    $_SESSION["visitas"] = 1;
+    $_SESSION["visitas"][] = $_COOKIE['ultimoAcceso'];
 }
 ?>
 <html>

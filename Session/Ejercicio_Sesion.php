@@ -12,8 +12,7 @@ if (isset($_POST['enviar'])) {
     setcookie('nombreUsuario', $nombre, time() + $tiempoCookie);
     setcookie('passUsuario', $pass, time() + $tiempoCookie);
     setcookie("ultimoAcceso", $fecha, time() + $tiempoCookie);
-
-
+    //$_SESSION['nombre'] = $_POST['nombre'];
     if (isset($_POST['recordar']))
         setcookie("chekeo", "checked", time() + $tiempoCookie);
 }
@@ -44,27 +43,24 @@ if (isset($_POST['enviar']) && (!empty($_POST['nombre'])) && (!empty($_POST['pas
         $_SESSION['password'] = $obj->password;
     }
     if ($result->rowCount()) {
-        if (isset($_SESSION['visitas'])) {
-            echo "Hola " . session_name();
-            echo "<br>";
-
-
-            echo "Visita número: " . $_SESSION["visitas"]++ . " En la fecha: " . $_COOKIE['ultimoAcceso'];
-        } else {
-            echo "Bienvenido a nuestra página";
-            $_SESSION["visitas"] = 1;
-        }
-        ?>
-        <html>
-            <head></head>
-            <body>
-                <form action="Ejercicio_Sesion.php" method="post">
-
-                    <input type="submit" name="volver" value="Volver">
-                </form>
-            </body>
-        </html>
-      <?php
+        
+        header('location: Guarda_Sesion.php');
+//        if (isset($_SESSION['visitas'])) {
+//            echo "Hola " . session_name();
+//            echo "<br>";
+//            //echo "Visita número: " . $_SESSION["visitas"]++ . " En la fecha: " . $_COOKIE['ultimoAcceso'];
+//            
+//            foreach ($_SESSION["visitas"] as $values){
+//                echo $values. "<br>";
+//            }
+//            $_SESSION["visitas"][] = date('d-m-y h:i:s');
+//        } else {
+//            echo "Bienvenido a nuestra página";
+//            $_SESSION["visitas"][] = date('d-m-y h:i:s');
+//        }
+      
+    }else{
+        header('location: Ejerciico_Sesion.php');
     }
    } else {
         ?>
