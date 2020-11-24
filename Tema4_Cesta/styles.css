@@ -119,9 +119,35 @@ sans-serif;
  font-size: 10px;
 } 
 
-span.mensaje {
+span{
   font-family: Verdana, Arial, sans-serif; 
   font-size: 0.7em;
   color: black;
-  background-color : red;
+  background-color : yellow;
+}
+
+#productos .codigo {
+ width: 20%;
+ float: left;
+}
+#productos .nombre {
+ width: 60%;
+ float: left;
+}
+#productos .precio {
+ width: 20%;
+ text-align: right;
+ font-weight: bold;
+}
+#pie {
+ padding: 0 10px;
+ background-color: #99ccff;
+ border-top-width: thin;
+ border-right-width: thin;
+ border-bottom-width: thin;
+ border-left-width: thin;
+ border-top-style: solid;
+ border-right-style: solid;
+ border-bottom-style: solid;
+ border-left-style: solid;
 }
