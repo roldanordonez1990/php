@@ -65,10 +65,10 @@ try {
                     ?>
                     <form action = "" method = "post">
                         <button type = 'submit' name ='añadir' value ="<?php echo $fila['cod'] ?>" >Añadir</button>
-                        <input type = "hidden" name = "descripcion" value = "<?php echo $fila['descripcion'] ?>">
-                        <input name = "nombreCorto" value = "<?php echo $fila['nombre_corto']; ?>">
+                        <input type = "hidden" name = "descripcion" value = "<?php echo $fila['descripcion'] ?>" >
+                        <input name = "nombreCorto" value = "<?php echo $fila['nombre_corto']; ?>"readonly>
                         ==>
-                        <input name = "pvp" value = "<?php echo $fila['PVP']; ?>">
+                        <input name = "pvp" value = "<?php echo $fila['PVP']; ?>"readonly>
 
                     </form>
                     <?php

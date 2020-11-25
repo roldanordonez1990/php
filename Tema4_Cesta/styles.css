@@ -126,6 +126,13 @@ span{
   background-color : yellow;
 }
 
+#incorrecto{
+  font-family: Verdana, Arial, sans-serif; 
+  font-size: 0.7em;
+  color: white;
+  background-color : red;
+}
+
 #productos .codigo {
  width: 20%;
  float: left;

@@ -14,7 +14,7 @@ if (isset($_POST['enviar'])) {
             header('location: productos.php');
             
         } else {
-            header('location: login.php');
+            //header('location: login.php');
             $bandera = false;
            
         }
@@ -25,7 +25,9 @@ if (isset($_POST['enviar'])) {
         echo $exc->getTraceAsString(); // error de php
         echo 'Error:' . $exc->getMessage(); // error del servidor de bd
     }
-}else{
+}
+
+if(!isset($_POST['enviar']) || $bandera == false){
     
     ?>
     <html>
@@ -42,7 +44,7 @@ if (isset($_POST['enviar'])) {
                 <?php
                 if($bandera == false){
                     ?>
-                <span>Usiario incorrecto</span>
+                <span id="incorrecto">Usuario incorrecto</span>
                 <?php
                 }
                 ?>

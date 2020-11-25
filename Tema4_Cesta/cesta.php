@@ -23,20 +23,16 @@ if (!$_SESSION['nombre']) {
                 <?php
                 
                 if(isset($_SESSION['cesta'])){
-                $precios = 0;
-                $total = 0;
+                $precioTotal = 0;
+               
                    foreach ($_SESSION['cesta'] as $key => $values){
-                      
+                     
                       ?>
                 <p><?php echo $values['nombre']."----->".$values['precio']." € "." x ".$values['cantidad']." uds"."<br>"; ?></p>
                
                       <?php 
-                        $precios = $values['precio'] * $values['cantidad'];
-                        $totalPrecios = array('precios' => $precios);
-                        
-                        foreach($totalPrecios as $value){
-                            $total += $value;
-                        }
+                        $precioTotal += $values['precio'] * $values['cantidad'];
+//                       
 
                    }
                    
@@ -44,7 +40,7 @@ if (!$_SESSION['nombre']) {
 
                 ?>
                 <hr />
-                <p><span>Precio total: <?php  echo $total ?>€</span></p>
+                <p><span>Precio total: <?php  echo $precioTotal ?>€</span></p>
                 <form action="pagar.php" method="POST">
                     <p><span class="pagar"><input type="submit" name="pagar" value="Pagar"</span></p>
                 </form>
