@@ -102,7 +102,7 @@ if(!isset($_POST['entrar']) || $bandera == false){
     <?php
     
     if(isset($_POST['registrar'])){
-        
+      
         header('location: registro.php');
     }
 }

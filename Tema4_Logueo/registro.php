@@ -1,8 +1,13 @@
 <?php
-session_name();
 session_start();
 
-if (isset($_COOKIE['intentos']) && ($_COOKIE['intentos']) == 3) {
+
+
+if (isset($_COOKIE['intentos']) && $_COOKIE['intentos'] != 0) {
+    
+    if(isset($_SESSION['nombre'])){
+    header('location: inicio.php');
+}
 
     try {
         $opciones = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
@@ -18,22 +23,27 @@ if (isset($_COOKIE['intentos']) && ($_COOKIE['intentos']) == 3) {
 
     if (isset($_POST['enviar']) && preg_match("/^[a-z]{1,50}$/i", $_POST["nombre"]) && preg_match("/^[a-z]{1,50}$/i", $_POST["apellido"]) && preg_match("/^[a-z]{1,50}$/i", $_POST["direccion"]) && preg_match("/^[a-z]{1,50}$/i", $_POST["localidad"]) && preg_match("/^[a-z0-9-]{1,}@[a-z0-9-]{1,}(\.[a-z]{2,})$/i", $_POST["email"]) && preg_match("/^[0-9a-z]{1,50}$/i", $_POST["pass"]) && !empty($_POST['color_letra']) && !empty($_POST['color_fondo']) && !empty($_POST['tipo_letra']) && !empty($_POST['tam_letra'])) {
         $passCodificada = md5($_POST['pass']);
-        $result = $conex->query("INSERT INTO perfil_usuario (nombre,apellidos,direccion,localidad,user,pass,color_letra,color_fondo,tipo_letra,tam_letra) VALUES('$_POST[nombre]','$_POST[apellido]','$_POST[direccion]','$_POST[localidad]','$_POST[email]','$passCodificada','$_POST[color_letra]','$_POST[color_fondo]','$_POST[tipo_letra]','$_POST[tam_letra]')");
-        $result2 = $conex->query("SELECT * from perfil_usuario where nombre='$_POST[nombre]' and pass='" . md5($_POST["pass"]) . "'");
-        if ($result->rowCount()) {
-            while ($fila = $result2->fetch(PDO:: FETCH_OBJ)) {
-                $_SESSION['nombre'] = $fila->nombre;
-                $_SESSION['apellidos'] = $fila->apellidos;
-                $_SESSION['direccion'] = $fila->direccion;
-                $_SESSION['localidad'] = $fila->localidad;
-                $_SESSION['email'] = $fila->user;
-                $_SESSION['pass'] = $fila->pass;
-                $_SESSION['color_letra'] = $fila->color_letra;
-                $_SESSION['color_fondo'] = $fila->color_fondo;
-                $_SESSION['tipo_letra'] = $fila->tipo_letra;
-                $_SESSION['tam_letra'] = $fila->tam_letra;
-            }
+        $result2 = $conex->query("SELECT * from perfil_usuario where user='$_POST[email]'");
+        if ($result2->rowCount()) {
+            $error = true;
+           
+        }else{
+                $result = $conex->exec("INSERT INTO perfil_usuario (nombre,apellidos,direccion,localidad,user,pass,color_letra,color_fondo,tipo_letra,tam_letra) VALUES('$_POST[nombre]','$_POST[apellido]','$_POST[direccion]','$_POST[localidad]','$_POST[email]','$passCodificada','$_POST[color_letra]','$_POST[color_fondo]','$_POST[tipo_letra]','$_POST[tam_letra]')");
+                
+                 
+                $_SESSION['nombre'] = $_POST['nombre'];
+                $_SESSION['apellidos'] = $_POST['apellido'];
+                $_SESSION['direccion'] = $_POST['direccion'];
+                $_SESSION['localidad'] = $_POST['localidad'];
+                $_SESSION['email'] = $_POST['email'];
+                $_SESSION['pass'] = $_POST['pass'];
+                $_SESSION['color_letra'] = $_POST['color_letra'];
+                $_SESSION['color_fondo'] = $_POST['color_fondo'];
+                $_SESSION['tipo_letra'] = $_POST['tipo_letra'];
+                $_SESSION['tam_letra'] = $_POST['tam_letra'];
+            
             header('location: inicio.php');
+            
         }
     }
     ?>
@@ -50,11 +60,11 @@ if (isset($_COOKIE['intentos']) && ($_COOKIE['intentos']) == 3) {
                     <legend id="login">Formulario de registro</legend>
                     <form action="" method="post">
                         Nombre:<input type="text" name="nombre" <?php
-                        if (!empty($_POST['nombre'])) {
-                            ?> value="<?php $_POST['nombre'] ?>"
-                                          <?php
-                                      }
-                                      ?>/>
+                        if (!empty($_POST['apellido'])) {
+                            echo 'value="' . $_POST['nombre'] . '"';
+                        }
+                        ?>/>
+                                     
                                       <?php
                                       if (isset($_POST['enviar'])) {
                                           if (!preg_match("/^[a-z]{1,50}$/i", $_POST["nombre"])) {
@@ -110,6 +120,11 @@ if (isset($_COOKIE['intentos']) && ($_COOKIE['intentos']) == 3) {
                                          if (!preg_match("/^[a-z0-9-]{1,}@[a-z0-9-]{1,}(\.[a-z]{2,})$/i", $_POST["email"])) {
                                              echo "<span style='color:red'>No puede estar vacio y debe tener el formato a@dd. </span>";
                                          }
+                                     }
+                                     
+                                     if (isset($_POST['enviar']) && $error == true) {
+                                            echo "<span style='color:red'>Este email ya existe</span>";
+                                         
                                      }
                                      ?><br><br>
                         Contraseña:<input type="password" name="pass" <?php
@@ -171,6 +186,7 @@ if (isset($_COOKIE['intentos']) && ($_COOKIE['intentos']) == 3) {
                             }
                             ?>
                         </select>
+                        <br>
                         <input type='submit' name='enviar' value='Registrar'/>
                         <input type='submit' name='volver' value='Volver'/>
                     </form>

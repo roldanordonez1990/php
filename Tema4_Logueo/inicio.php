@@ -1,6 +1,18 @@
 <?php
 session_name();
 session_start();
+
+if(isset($_POST['salir'])){
+    setcookie(session_name(), "", time()-3600, "/");
+    session_unset();
+    session_destroy();
+    header('location: index.php');
+}
+
+if(isset($_POST['ver'])){
+     header('location: datos.php');
+}
+
 if (isset($_COOKIE['intentos']) && $_COOKIE['intentos'] == 3) {
     ?>
     <html>
@@ -22,10 +34,16 @@ if (isset($_COOKIE['intentos']) && $_COOKIE['intentos'] == 3) {
             <br>
             <h1>Bienvenido a nuestra web</h1>
             <br>
+
+            <form action="" method="post">
+                <input type="submit" name="salir" value="Salir">
+            </form>
             <br>
-            <a href="index.php">Salir</a>
-            <br>
-            <a href="datos.php">Ver mis datos</a>
+
+            <form action="" method="post">
+                <input type="submit" name="ver" value="Ver datos">
+            </form>
+
         </body>
     </html>
     <?php
