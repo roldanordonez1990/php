@@ -16,11 +16,23 @@ if (isset($_POST['entrar'])) {
         $opciones = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
         $conex = new PDO('mysql:host=localhost; dbname=logueo; charset=UTF8mb4', 'dwes', 'abc123.', $opciones);
         $result = $conex->query("SELECT * from perfil_usuario where nombre='$_POST[nombre]' and pass='" . md5($_POST["pass"]) . "'");
-        
+
         if ($result->rowCount()) {
 
             session_start();
             session_name();
+            while ($obj = $result->fetch(PDO:: FETCH_OBJ)) {
+            $_SESSION['nombre'] = $obj->nombre;
+            $_SESSION['apellidos'] = $obj->apellidos;
+            $_SESSION['direccion'] = $obj->direccion;
+            $_SESSION['localidad'] = $obj->localidad;
+            $_SESSION['email'] = $obj->user;
+            $_SESSION['pass'] = $obj->pass;
+            $_SESSION['color_letra'] = $obj->color_letra;
+            $_SESSION['color_fondo'] = $obj->color_fondo;
+            $_SESSION['tipo_letra'] = $obj->tipo_letra;
+            $_SESSION['tam_letra'] = $obj->tam_letra;
+        }
             $_SESSION['nombre'] = $_POST['nombre'];
             header('location: inicio.php');
             
