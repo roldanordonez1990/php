@@ -3,8 +3,8 @@ $bandera = true;
 if (isset($_POST['enviar'])) {
     try {
         $opciones = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-        $conex = new PDO('mysql:host=localhost; dbname=formcookie; charset=UTF8mb4', 'dwes', 'abc123.', $opciones);
-        $result = $conex->query("SELECT * from datos where nombre='$_POST[nombre]' and password='" . md5($_POST["pass"]) . "'");
+        $conex = new PDO('mysql:host=localhost; dbname=dwes; charset=UTF8mb4', 'dwes', 'abc123.', $opciones);
+        $result = $conex->query("SELECT * from usuarios where nombre='$_POST[nombre]' and password='" . md5($_POST["pass"]) . "'");
         
         if ($result->rowCount()) {
 
