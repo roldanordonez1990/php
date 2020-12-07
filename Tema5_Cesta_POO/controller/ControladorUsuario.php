@@ -25,7 +25,7 @@ class controladorUsuario {
 //
 //}
 
-public static function buscarUsuarioPorNombreYPassword($nombre, $password, &$errores){
+public static function buscarUsuarioPorNombreYPassword($nombre, $password){
         try{
             $conex = new Conexion();
             //$result = $conex->query("SELECT * FROM usuarios WHERE nombre='$_POST[nombre]' and password='" . md5($_POST["pass"]) . "'");
@@ -39,8 +39,9 @@ public static function buscarUsuarioPorNombreYPassword($nombre, $password, &$err
             unset($result);
             unset($conex);
         } catch (PDOException $exc){
-            $errores[]=$exc->getMessage();
-           
+            //$errores[]=$exc->getMessage();
+           echo '<a href=index.php>Ir a inicio</a>';
+           die('error con la base de datos');
         }
     }
 }

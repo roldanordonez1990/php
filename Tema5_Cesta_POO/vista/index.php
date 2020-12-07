@@ -3,7 +3,7 @@ require_once '../controller/ControladorUsuario.php';
 
 $correcto = true;
 if (isset($_POST['enviar']) && isset($_POST['nombre']) && isset($_POST['pass'])) {
-    $usuario = ControladorUsuario::buscarUsuarioPorNombreYPassword($_POST['nombre'], $_POST['pass'], $errores);
+    $usuario = ControladorUsuario::buscarUsuarioPorNombreYPassword($_POST['nombre'], $_POST['pass']);
     //compruebo que hay coincidencias y que existe el usuario en la bbdd
     if(empty($errores) && $usuario != null){
          session_start();
