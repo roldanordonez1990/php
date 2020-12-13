@@ -6,28 +6,12 @@ require_once './controller/ControladorCliente.php';
 require_once './controller/ControladorAlquiler.php';
 session_start();
 
-if (isset($_POST['cerrar'])) {
 
-    if (!$_SESSION['nombre']) {
-        header('location: index.php');
-    } else {
-        setcookie(session_name(), "", time() - 3600, "/");
-        session_unset();
-        session_destroy();
-        header('location: index.php');
-    }
+if(isset($_POST['borrar'])){
+    
+  
 }
 
- if(isset($_POST['alquilar'])){
-                                  
-    
-    $fechaA = date("Y-n-d");
-    $fechaD = date("Y-n-d");
-    ControladorAlquiler::insertar(null,$_POST['alquilar'], $_SESSION['dni'], $fechaA, null);
-    ControladorAlquiler::cambiarAlquilerSI($_POST['alquilar']);
-  
-                                    
- }
 
 ?>
 <!DOCTYPE html>
@@ -56,15 +40,18 @@ if (isset($_POST['cerrar'])) {
             </div>
             <div class="container">
 
-                <div class="">
-                    <form action="" method="post">
-                        <input type="submit" name="cerrar" value="Cerrar Sesión">
-                    </form>
-                </div>
-                <a href="" >Listado de Juegos</a> -- <a href="vistaAlquilerJuegos.php" >Listado de Juegos Alquilados</a> -- <a href="vistaNoAlquilados.php" >Listado de Juegos NO Alquilados</a> -- <a href="misJuegosAlquilados.php" >Mis Juegos Alquilados</a>
-                 <br>
-                 <a href="vistaNuevoJuego.php" >Añadir Juego</a> -- <a href="vistaAdministrarJuegos.php" >Administrar Juegos</a>
-                <h4 style="text-align: start">Juegos Disponibles</h4>
+                <?php if($_SESSION['nombre'] == "Admin"){
+                    ?>
+                <a href="vistaAdministrador.php">Volver</a>
+                     <?php
+                }else{
+                   ?>
+                     <a href="vistaLogueo.php">Volver</a>
+                     <?php
+                }
+            ?>
+                
+                <h4 style="text-align: start">Gestiona los Juegos</h4>
                 <table class="table table-hover">
                     <thead class="thead bg-success text-white">
                         <tr>
@@ -73,6 +60,7 @@ if (isset($_POST['cerrar'])) {
                             <th>Nombre Consola</th>
                             <th>Año</th>
                             <th>Precio</th>
+                            <th></th>
                             <th></th>
                            
                         </tr>
@@ -87,12 +75,14 @@ if (isset($_POST['cerrar'])) {
                         foreach ($juegos as $values) {
                             ?>
                             <tr>
-                                <td><a href="vistaDescripcionJuego.php?Codigo=<?php echo $values->codigo ?>"> <img src="<?php echo $values->imagen ?>" width="60px" height="70px"/></a>
+                                <td> <img src="<?php echo $values->imagen ?>" width="60px" height="70px"/></td>
                                 <td><?php echo $values->nombre_juego ?></td>
                                 <td><?php echo $values->nombre_consola ?></td>
                                 <td><?php echo $values->anno ?></td>
                                 <td><?php echo $values->precio ?></td>
-                                <td> <form action="" method="post"><button class="visible" type="submit" name="alquilar" value="<?php echo $values->codigo ?>">Alquilar</button>  </form> </td>
+                                <td> <form  action="" method="post"><button class="btn btn-info" class="visible" type="button" name="editar" value="<?php echo $values->codigo ?>">Editar</button>  </form> </td>
+                                <td> <form  action="" method="post"><button class="btn btn-danger" class="visible" type="button" name="borrar" value="<?php echo $values->codigo ?>">Borrar</button>  </form> </td>
+
                             </tr>
                             <?php
                         }

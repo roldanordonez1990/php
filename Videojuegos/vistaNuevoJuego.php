@@ -6,24 +6,19 @@ session_start();
 
 if(isset($_POST['añadir'])){
     
+    $string = "$_POST[nombre]";
+
+    $expr = '/(?<=\s|^)[a-z]/i';
+    preg_match_all($expr, $string, $matches);
+    $result = implode('', $matches[0]);
+    $result = strtoupper($result);
+
+    $juego = new Juegos();
     $juego->nuevoJuego($result."-".$_POST['consola'],$_POST['nombre'],$_POST['consola'],$_POST['año'],$_POST['precio'],'NO','imagenes/'.$_POST['foto'],$_POST['descripcion']);
     ControladorJuego::insertar($juego);
-    
-     if(is_uploaded_file($_FILES['foto']['tmp_name'])){
-        // para hacer el nombre único le vamos a concatenar el tiempo UNY
-        $fich_unic=$_FILES['foto']['name']."-".time();
-        $ruta="imagenes/".$fich_unic;
-        //para copiar el fichero en la carpeta usamos la funciçon move_uploaded_file
-        move_uploaded_file($_FILES['foto']['tmp_name'], $ruta);
-        // para poner la imagen en la base de datos
-        $conex = new Conexion();
-        $conex->query("INSERT INTO juegos (Imagen) values('$ruta')");
-        echo $conex->error;
-        $conex->close();
-    }else{
-        echo 'ERROR al cargar la imagen';
-    }
+         
 }
+
 
 ?>
 

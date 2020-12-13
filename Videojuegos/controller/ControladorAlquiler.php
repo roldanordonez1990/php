@@ -17,6 +17,22 @@ class controladorAlquiler {
             die('error con la base de datos');
             //mata el programa
         }
+        unset($result);
+        unset($conex);
+    }
+    
+     public function eliminarJuego($codigo) {
+        try {
+            $conex = new Conexion();
+            $conex->exec("DELETE from juegos where Codigo='$codigo'");
+        } catch (PDOException $ex) {
+            //echo '<a href=index.php>Ir a inicio</a>';
+            echo 'no inserto';
+            //header('Location:vistaCliente.php');
+            die('error con la base de datos');
+            //mata el programa
+        }
+        unset($result);
         unset($conex);
     }
 
