@@ -1,6 +1,5 @@
 
 <?php
-
 require_once './controller/ControladorJuego.php';
 require_once './controller/ControladorCliente.php';
 require_once './controller/ControladorAlquiler.php';
@@ -9,8 +8,11 @@ session_start();
 
 if(isset($_POST['borrar'])){
     
+   
+    ControladorJuego::eliminarJuego($_POST['borrar']);
   
 }
+
 
 
 ?>
@@ -68,9 +70,8 @@ if(isset($_POST['borrar'])){
 
                     <?php
                     try {
-                        $conex = new Conexion();
 
-                        $juegos = ControladorJuego::recuperarNoAlquilados();
+                        $juegos = ControladorJuego::recuperarTodos();
 
                         foreach ($juegos as $values) {
                             ?>
@@ -80,8 +81,8 @@ if(isset($_POST['borrar'])){
                                 <td><?php echo $values->nombre_consola ?></td>
                                 <td><?php echo $values->anno ?></td>
                                 <td><?php echo $values->precio ?></td>
-                                <td> <form  action="" method="post"><button class="btn btn-info" class="visible" type="button" name="editar" value="<?php echo $values->codigo ?>">Editar</button>  </form> </td>
-                                <td> <form  action="" method="post"><button class="btn btn-danger" class="visible" type="button" name="borrar" value="<?php echo $values->codigo ?>">Borrar</button>  </form> </td>
+                                <td> <form  action="vistaEditarJuego.php" method="post"><button class="btn btn-info" class="visible" type="submit" name="editar" value="<?php echo $values->codigo ?>">Editar</button>  </form> </td>
+                                <td> <form  action="" method="post"><button class="btn btn-danger" class="visible" type="submit" name="borrar" value="<?php echo $values->codigo ?>">Borrar</button>  </form> </td>
 
                             </tr>
                             <?php

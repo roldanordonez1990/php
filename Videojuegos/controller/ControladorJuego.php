@@ -3,7 +3,6 @@
 require_once './controller/Conexion.php';
 require_once './modelo/Juegos.php';
 
-
 class ControladorJuego {
 
     public static function insertar(Juegos $j) {
@@ -18,15 +17,45 @@ class ControladorJuego {
         }
         unset($conex);
     }
-    
-    
-        public static function buscarJuego($cod) {
+
+    public function eliminarJuego($codigo) {
+        try {
+            $conex = new Conexion();
+            $conex->exec("DELETE from juegos where Codigo='$codigo'");
+        } catch (PDOException $ex) {
+            //echo '<a href=index.php>Ir a inicio</a>';
+            echo 'no inserto';
+            //header('Location:vistaCliente.php');
+            die('error con la base de datos');
+            //mata el programa
+        }
+        unset($result);
+        unset($conex);
+    }
+
+    public function modificarJuego(Juegos $juego) {
+        try {
+            $conex = new Conexion();
+            $conex->exec("UPDATE juegos SET Anno='$juego->anno', Precio='$juego->precio', Imagen='$juego->imagen', descripcion='$juego->descripcion' WHERE Codigo='$juego->codigo'");
+            
+        } catch (PDOException $ex) {
+            //echo '<a href=index.php>Ir a inicio</a>';
+            echo 'no inserto';
+            //header('Location:vistaCliente.php');
+            die('error con la base de datos');
+            //mata el programa
+        }
+        unset($result);
+        unset($conex);
+    }
+
+    public static function buscarJuego($cod) {
         try {
             $conex = new Conexion();
             $result = $conex->query("SELECT * FROM juegos WHERE Codigo='$cod'");
             if ($result->rowCount()) {
                 $row = $result->fetchObject();
-                 $j = new Juegos($row->Codigo, $row->Nombre_juego, $row->Nombre_consola, $row->Anno, $row->Precio, $row->Alguilado, $row->Imagen, $row->descripcion);
+                $j = new Juegos($row->Codigo, $row->Nombre_juego, $row->Nombre_consola, $row->Anno, $row->Precio, $row->Alguilado, $row->Imagen, $row->descripcion);
                 // como es un objeto de la misma clase se puede hacer así
                 return $j;
             } else
@@ -38,20 +67,20 @@ class ControladorJuego {
         unset($result);
         unset($conex);
     }
-    
- public static function recuperarTodos() {
+
+    public static function recuperarTodos() {
         try {
             $conex = new Conexion();
             $result = $conex->query("SELECT * FROM juegos");
             if ($result->rowCount()) {
                 //creo un producto
-                
+
                 while ($row = $result->fetchObject()) {
-                    
-                     $j = new Juegos($row->Codigo, $row->Nombre_juego, $row->Nombre_consola, $row->Anno, $row->Precio, $row->Alguilado, $row->Imagen);
-                     $juegos[] = clone($j);   
+
+                    $j = new Juegos($row->Codigo, $row->Nombre_juego, $row->Nombre_consola, $row->Anno, $row->Precio, $row->Alguilado, $row->Imagen);
+                    $juegos[] = clone($j);
                 }
-                 return $juegos;
+                return $juegos;
             } else
                 return false;
         } catch (PDOException $ex) {
@@ -60,37 +89,35 @@ class ControladorJuego {
         }
         unset($result);
         unset($conex);
-      }
-      
-      
-       public function recuperarAlquiladosUsuario($dni) {
+    }
+
+    public function recuperarAlquiladosUsuario($dni) {
         try {
             $conex = new Conexion();
             $result = $conex->query("SELECT * FROM juegos, alquiler WHERE Cod_juego=Codigo AND Alguilado='SI' AND DNI_cliente='$dni'");
-                    
+
             return $result;
-           
         } catch (PDOException $ex) {
             echo '<a href=index.php>Ir a inicio</a>';
             die('error con la base de datos' . $ex->getMessage());
         }
-         unset($result);
+        unset($result);
         unset($conex);
-      }
-      
-       public static function recuperarNoAlquilados() {
+    }
+
+    public static function recuperarNoAlquilados() {
         try {
             $conex = new Conexion();
             $result = $conex->query("SELECT * FROM juegos where Alguilado='NO'");
             if ($result->rowCount()) {
                 //creo un producto
-                
+
                 while ($row = $result->fetchObject()) {
-                    
-                     $j = new Juegos($row->Codigo, $row->Nombre_juego, $row->Nombre_consola, $row->Anno, $row->Precio, $row->Alguilado, $row->Imagen);
-                     $juegos[] = clone($j);   
+
+                    $j = new Juegos($row->Codigo, $row->Nombre_juego, $row->Nombre_consola, $row->Anno, $row->Precio, $row->Alguilado, $row->Imagen);
+                    $juegos[] = clone($j);
                 }
-                 return $juegos;
+                return $juegos;
             } else
                 return false;
         } catch (PDOException $ex) {
@@ -99,7 +126,6 @@ class ControladorJuego {
         }
         unset($result);
         unset($conex);
-      }
+    }
 
-      
 }

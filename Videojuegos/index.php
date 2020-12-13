@@ -12,7 +12,7 @@ if (isset($_POST['entrar']) && isset($_POST['dni']) && isset($_POST['pass'])) {
               $_SESSION['nombre'] = $cliente->nombre;
               $_SESSION['dni'] = $cliente->dni;
               header("location:vistaAdministrador.php");
-         }else{
+         }else{ 
               $_SESSION['nombre'] = $cliente->nombre;
               $_SESSION['dni'] = $cliente->dni;
               header("location:vistaLogueo.php");
