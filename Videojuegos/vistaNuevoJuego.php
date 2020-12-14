@@ -4,6 +4,10 @@ require_once './controller/ControladorCliente.php';
 require_once './controller/ControladorAlquiler.php';
 session_start();
 
+if(!isset($_SESSION['nombre'])){
+    header("Location:index.php");
+    }
+
 if (isset($_POST['añadir'])) {
 
     $string = "$_POST[nombre]";

@@ -4,6 +4,9 @@ require_once './controller/ControladorCliente.php';
 require_once './controller/ControladorAlquiler.php';
 session_start();
 
+if(!isset($_SESSION['nombre'])){
+    header("Location:index.php");
+    }
 
 if (isset($_POST['alquilar'])) {
 
@@ -55,7 +58,7 @@ if (isset($_POST['alquilar'])) {
                     <p><?php echo "<b>Año:</b> " . $juego->anno ?></p>
                     <p><?php echo "<b>Precio:</b> " . $juego->precio ?></p>
                     <p><?php echo "<b>Descripción:</b> " . $juego->descripcion ?></p>
-                    <form action="" method="post"><button class="visible" type="submit" name="alquilar" value="<?php echo $juego->codigo ?>">Alquilar</button>  </form>
+                    <form action="" method="post"><button class="visible" type="submit" name="alquilar" value="<?php echo $juego->codigo ?>" <?php if($juego->alquilado == 'SI')  echo "style= 'display: none;'"; ?>>Alquilar</button>  </form>
                 </div>
                 <div class="col-md-4">
                     <img src="<?php echo $juego->imagen ?>">

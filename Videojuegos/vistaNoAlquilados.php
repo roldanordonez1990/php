@@ -5,6 +5,10 @@ require_once './controller/ControladorCliente.php';
 require_once './controller/ControladorAlquiler.php';
 session_start();
 
+if(!isset($_SESSION['nombre'])){
+    header("Location:index.php");
+    }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,6 +45,15 @@ session_start();
                      <?php
                 }
             ?>
+                   <br>
+                      <?php
+
+                       
+                        $juegos = ControladorJuego::recuperarNoAlquilados();
+                            
+                         if($juegos > 0){
+                     ?>   
+                     
                 <h4 style="text-align: start">Juegos Comares</h4>
                 <table class="table table-hover">
                     <thead class="thead bg-success text-white">
@@ -50,16 +63,12 @@ session_start();
                             <th>Nombre Consola</th>
                             <th>Año</th>
                             <th>Precio</th>
-                            <th></th>
+                            
                         </tr>
                     </thead>
 
                     <?php
 
-                     $conex = new Conexion();
-
-                        $juegos = ControladorJuego::recuperarNoAlquilados();
-                       
                      foreach($juegos as $values){
                         
                             ?>
@@ -75,6 +84,15 @@ session_start();
                             }
                        ?>
                 </table>
+                 <?php
+                }else{
+                     ?>               
+                   <div class="alert alert-warning">
+                        <strong>¡Lo sentimos!</strong> Todos los juegos están alquilados
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
 

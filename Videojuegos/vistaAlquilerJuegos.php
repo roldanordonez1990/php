@@ -5,6 +5,10 @@ require_once './controller/ControladorCliente.php';
 require_once './controller/ControladorAlquiler.php';
 session_start();
 
+if(!isset($_SESSION['nombre'])){
+    header("Location:index.php");
+    }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,6 +45,14 @@ session_start();
                      <?php
                 }
             ?>
+                      <br>
+                      <?php
+
+                       
+                        $juegos = ControladorAlquiler::recuperarTodosConCliente();
+                            
+                         if($juegos->rowCount()){
+                     ?>
                 
                 <h4 style="text-align: start">Juegos Comares</h4>
                 <table class="table table-hover">
@@ -58,7 +70,7 @@ session_start();
 
                     <?php
 
-                     $juegos = ControladorAlquiler::recuperarTodosConCliente();
+                     
                        
                      while($row = $juegos->fetchObject()){
                         
@@ -75,6 +87,16 @@ session_start();
                             }
                        ?>
                 </table>
+                
+                 <?php
+                }else{
+                     ?>               
+                   <div class="alert alert-warning">
+                        <strong>¡Lo sentimos!</strong> No existe ningún juego alquilado en este momento
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
 

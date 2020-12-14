@@ -6,6 +6,10 @@ require_once './controller/ControladorCliente.php';
 require_once './controller/ControladorAlquiler.php';
 session_start();
 
+if(!isset($_SESSION['nombre'])){
+    header("Location:index.php");
+    }
+
 if (isset($_POST['cerrar'])) {
 
     if (!$_SESSION['nombre']) {
@@ -82,17 +86,17 @@ if (isset($_POST['cerrar'])) {
                     try {
                         $conex = new Conexion();
 
-                        $juegos = ControladorJuego::recuperarNoAlquilados();
+                        $juegos = ControladorJuego::recuperarTodos();
 
                         foreach ($juegos as $values) {
                             ?>
                             <tr>
-                                <td><a href="vistaDescripcionJuego.php?Codigo=<?php echo $values->codigo ?>"> <img src="<?php echo $values->imagen ?>" width="60px" height="70px"/></a>
+                                <td><a href="vistaDescripcionJuego.php?Codigo=<?php echo $values->codigo ?>"> <img src="<?php echo $values->imagen ?>" width="60px" height="70px" <?php if($values->alquilado == 'SI') echo "style='filter: grayscale(100%);'"; ?>/></a>
                                 <td><?php echo $values->nombre_juego ?></td>
                                 <td><?php echo $values->nombre_consola ?></td>
                                 <td><?php echo $values->anno ?></td>
                                 <td><?php echo $values->precio ?></td>
-                                <td> <form action="" method="post"><button class="visible" type="submit" name="alquilar" value="<?php echo $values->codigo ?>">Alquilar</button>  </form> </td>
+                                <td> <form action="" method="post"><button class="visible" type="submit" name="alquilar" value="<?php echo $values->codigo ?>" <?php if($values->alquilado == 'SI') echo "style= 'display: none;'"; ?>>Alquilar</button>  </form> </td>
                             </tr>
                             <?php
                         }

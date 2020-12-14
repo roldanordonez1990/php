@@ -94,7 +94,7 @@ class ControladorJuego {
     public function recuperarAlquiladosUsuario($dni) {
         try {
             $conex = new Conexion();
-            $result = $conex->query("SELECT * FROM juegos, alquiler WHERE Cod_juego=Codigo AND Alguilado='SI' AND DNI_cliente='$dni'");
+            $result = $conex->query("SELECT * FROM juegos, alquiler WHERE Fecha_devol='null' AND Cod_juego=Codigo AND Alguilado='SI' AND DNI_cliente='$dni'");
 
             return $result;
         } catch (PDOException $ex) {

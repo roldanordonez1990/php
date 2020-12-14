@@ -26,7 +26,7 @@ class controladorAlquiler {
     public function recuperarTodosConCliente() {
         try {
             $conex = new Conexion();
-            $result = $conex->query("SELECT Imagen, Nombre_juego, Nombre_consola,Anno, Precio, Nombre FROM alquiler, cliente, juegos WHERE Cod_juego=Codigo AND DNI_cliente=DNI");
+            $result = $conex->query("SELECT Imagen, Nombre_juego, Nombre_consola,Anno, Precio, Nombre FROM alquiler, cliente, juegos WHERE Cod_juego=Codigo AND DNI_cliente=DNI AND Fecha_devol='null'");
 
             return $result;
             
@@ -66,6 +66,57 @@ class controladorAlquiler {
             
             $result->execute();
             $result = null;
+            
+        } catch (PDOException $ex) {
+            echo '<a href=index.php>Ir a inicio</a>';
+            die('error con la base de datos' . $ex->getMessage());
+        }
+        unset($result);
+        unset($conex);
+      }
+      
+            public function fechaDevolucion($cod) {
+        try {
+            $conex = new Conexion();
+            $result = $conex->prepare("UPDATE alquiler SET Fecha_devol=? WHERE Cod_juego ='$cod'");
+           
+            $fechaD = date("Y-n-d");
+            $result->bindParam(1, $fechaD);
+            
+            $result->execute();
+            $result = null;
+            
+        } catch (PDOException $ex) {
+            echo '<a href=index.php>Ir a inicio</a>';
+            die('error con la base de datos' . $ex->getMessage());
+        }
+        unset($result);
+        unset($conex);
+      }
+      
+       public function calculoFechas($id,$cod) {
+        try {
+            $conex = new Conexion();
+            $result = $conex->query("SELECT * from alquiler WHERE id='$id' AND Cod_juego='$cod'");
+           
+           
+            return $result;
+            
+        } catch (PDOException $ex) {
+            echo '<a href=index.php>Ir a inicio</a>';
+            die('error con la base de datos' . $ex->getMessage());
+        }
+        unset($result);
+        unset($conex);
+      }
+      
+       public function pagoCliente($id) {
+        try {
+            $conex = new Conexion();
+            $result = $conex->query("SELECT Precio from alquiler, juegos WHERE id='$id' AND Codigo=Cod_juego");
+           
+           
+            return $result;
             
         } catch (PDOException $ex) {
             echo '<a href=index.php>Ir a inicio</a>';
