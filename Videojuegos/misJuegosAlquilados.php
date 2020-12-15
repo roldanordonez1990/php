@@ -16,6 +16,7 @@ if(isset($_POST['devolver'])){
     //controladorAlquiler::eliminarAlquiler($_POST['devolver']);
     $dias;
     $diferencia;
+    $total;
     $fechas = ControladorAlquiler::calculoFechas($_POST['id'], $_POST['devolver']);
 
         while($row = $fechas->fetchObject()){
@@ -46,13 +47,13 @@ if(isset($_POST['devolver'])){
     while($row = $pago->fetchObject()){
         $pagar = $row->Precio;
     
-      if($diferencia > 7){
+      if($d > 7){
           
-      $total = $pagar + ($diferencia - 7);   
+      $total = $pagar + ($d - 7);   
       //echo "Tienes que pagar: ". $total;
       ?>
                     <div class="alert alert-danger">
-                       Tienes que pagar <strong><?php echo $total?></strong>
+                      Han pasado <strong><?php echo $d?></strong> días. Tienes que pagar <strong><?php echo $total?></strong>
                     </div>
         <?php
       
