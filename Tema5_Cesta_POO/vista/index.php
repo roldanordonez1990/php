@@ -11,39 +11,7 @@ if (isset($_POST['enviar']) && isset($_POST['nombre']) && isset($_POST['pass']))
           header("location:vistaCesta.php");
     }
 
-//    try {
-//        $conex = new Conexion();
-//        $result = $conex->query("SELECT * FROM usuarios WHERE nombre='$_POST[nombre]' and password='" . md5($_POST["pass"]) . "'");
-////        while ($obj = $result->fetch(PDO::FETCH_OBJ)) {
-////            $_SESSION['nombre'] = $obj->nombre;
-////            //echo  $_SESSION['nombre'];
-////            $_SESSION['password'] = $obj->password;
-////        }
-//        if ($result->rowCount()) {
-//            //session_name($_POST['nombre']);
-//            session_name();
-//            session_start();
-//            $_SESSION['nombre'] = $_POST['nombre'];
-//            header("location:vistaCesta.php");
-//        } else {
-//            $correcto = false;
-//            //echo '<span class='."mensaje".'>El usuario no existe</span><br>' ;
-//            //header("location:login.php");
-//            ?>
-            <!--            <span class="mensaje">El usuario no existe</span>
-                        <form action="login.php">
-                            <input type="submit" name="volver" value="Volver">
-                        </form>-->
-            <?php
-//        }
-//    } catch (PDOException $exc) {
-//        echo $exc->getTraceAsString(); // error de php
-//        echo 'Error:' . $exc->getMessage(); // error del servidor de bd
-//    }
-//    if($_SESSION['nombre']== $_POST['nombre'] &&  $_SESSION['password']==$_POST['pass']){
-//            header("location:productos.php");
-//            //echo $_SESSION['nombre'];
-//        }
+
 } if (!isset($_POST['enviar']) || $correcto == false) {
     ?>
     <html>

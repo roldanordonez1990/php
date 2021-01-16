@@ -60,7 +60,7 @@ if (isset($_POST['enviar']) && (!empty($_POST['nombre'])) && (!empty($_POST['pas
 //        }
       
     }else{
-        header('location: Ejerciico_Sesion.php');
+        header('location: Ejercico_Sesion.php');
     }
    } else {
         ?>

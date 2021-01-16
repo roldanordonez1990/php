@@ -23,7 +23,7 @@ if (!isset($_SESSION['nombre'])) {
                     </div>
                     <div id="cesta">
                         <h3><img src="cestita.png" alt="Cesta" width="24" height="21">Cesta</h3>
-                        <hr />
+                       
                         <?php
                         if (isset($_POST['enviar'])) {
                             //$_SESSION['cesta'][$_POST['enviar']] = controladorPruducto::buscarProducto($_POST["enviar"]);
@@ -91,20 +91,6 @@ if (!isset($_SESSION['nombre'])) {
 
                     </div>
                 </div>
-
-                <?php
-//    if(isset($_POST['enviar'])){
-//        
-//       // $productosCesta= controladorPruducto::addCesta($_POST['enviar']);
-//        $_SESSION['cesta2'][$_POST['enviar']] = controladorPruducto::buscarProducto($_POST['enviar']);
-//       
-//        foreach ($productosCesta as $value) {
-//        echo 'Codigo '.$value->codigo. ' nombre '.$value->nombre_corto.'<br>';
-//        }
-//        echo count($productosCesta);
-//    } 
-//
-                ?>
             </body>
         </html>
 

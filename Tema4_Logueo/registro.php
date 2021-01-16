@@ -60,7 +60,7 @@ if (isset($_COOKIE['intentos']) && $_COOKIE['intentos'] != 0) {
                     <legend id="login">Formulario de registro</legend>
                     <form action="" method="post">
                         Nombre:<input type="text" name="nombre" <?php
-                        if (!empty($_POST['apellido'])) {
+                        if (!empty($_POST['nombre'])) {
                             echo 'value="' . $_POST['nombre'] . '"';
                         }
                         ?>/>

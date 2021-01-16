@@ -56,9 +56,6 @@ if (!$_SESSION['nombre']) {
                 
             </div>
         </div>
-        
-        
-        
     </body>
 </head>
 </html>
